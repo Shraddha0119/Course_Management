@@ -26,6 +26,14 @@ const userSchema = new mongoose.Schema(
       default: "student",
     },
 
+    // 👇 ADD HERE
+    enrolledCourses: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course",
+      },
+    ],
+
     profileImage: {
       type: String,
     },
