@@ -1,9 +1,7 @@
 import express from "express";
 import cors from "cors";
-
 import authRoutes from "./routes/authRoutes.js";
-import courseRoutes from "./routes/courseRoutes.js";
-import enrollmentRoutes from "./routes/enrollmentRoutes.js";
+import testRoutes from "./routes/testRoutes.js";
 
 const app = express();
 
@@ -11,7 +9,10 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
-app.use("/api/courses", courseRoutes);
-app.use("/api", enrollmentRoutes);
+app.use("/api/test", testRoutes);
+
+app.get("/", (req, res) => {
+  res.send("Course Management Backend Running 🚀");
+});
 
 export default app;
