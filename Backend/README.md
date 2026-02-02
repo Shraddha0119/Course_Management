@@ -33,5 +33,5 @@ Features implemented:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/Course_Management.git
+git clone https://github.com/Shraddha0119/Course_Management
 cd Course_Management/Backend
