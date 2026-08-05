@@ -6,6 +6,7 @@ import {
   updateCourse,
   deleteCourse,
   getCourseStudents,
+  addReview,
 } from "../controllers/courseController.js";
 
 import { protect } from "../middleware/authMiddleware.js";
@@ -31,5 +32,8 @@ router.get(
   authorize("admin", "instructor"),
   getCourseStudents
 );
+
+// Student - add review
+router.post("/:id/review", protect, authorize("student"), addReview);
 
 export default router;

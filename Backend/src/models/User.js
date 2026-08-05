@@ -42,9 +42,20 @@ const userSchema = new mongoose.Schema(
       type: String,
     },
 
-    isActive: {
+isActive: {
       type: Boolean,
       default: true,
+    },
+
+    // Achievements / badges earned by the user
+    badges: {
+      type: [
+        {
+          name: { type: String },
+          earnedAt: { type: Date, default: Date.now },
+        },
+      ],
+      default: [],
     },
   },
   { timestamps: true }
