@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 4500;
 // })
 
 
-
+console.log("MONGO_URL =", process.env.MONGO_URL);
 
 connectDB();
 
