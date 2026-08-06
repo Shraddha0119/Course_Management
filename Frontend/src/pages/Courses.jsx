@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import api from "../services/api";
 import CourseCard from "../components/CourseCard";
 import Loader from "../components/Loader";
@@ -8,10 +9,8 @@ function Courses() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
-
-  useEffect(() => {
-    fetchCourses();
-  }, []);
+  const [searchParams] = useSearchParams();
+  const category = searchParams.get("category") || "";
 
   const fetchCourses = async () => {
     try {
@@ -26,21 +25,33 @@ function Courses() {
     }
   };
 
-  // Filter courses by search
-  const filtered = courses.filter(
-    (c) =>
+// Filter courses by search AND category (from footer link query param)
+  const filtered = courses.filter((c) => {
+    const matchesSearch =
       c.title.toLowerCase().includes(search.toLowerCase()) ||
-      c.description.toLowerCase().includes(search.toLowerCase())
-  );
+      c.description.toLowerCase().includes(search.toLowerCase());
+    const matchesCategory =
+      !category ||
+      (c.category || "").toLowerCase() === category.toLowerCase();
+    return matchesSearch && matchesCategory;
+  });
+
+  const categoryCount = category
+    ? courses.filter(
+        (c) => (c.category || "").toLowerCase() === category.toLowerCase()
+      ).length
+    : courses.length;
 
   return (
     <div>
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-800">All Courses</h1>
+          <h1 className="text-3xl font-bold text-gray-800">
+            {category ? `${category} Courses` : "All Courses"}
+          </h1>
           <p className="text-gray-500 mt-1">
-            {courses.length} courses available
+            {categoryCount} course{categoryCount !== 1 ? "s" : ""} available
           </p>
         </div>
 
